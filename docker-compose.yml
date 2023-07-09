@@ -1,0 +1,41 @@
+services:
+
+  schoolbox-external-db-circuit-breaker:
+    image: jimdavis66/schoolbox-external-db-circuit-breaker:latest
+    container_name: schoolbox-external-db-circuit-breaker
+    command: python -u ./app.py
+    restart: always
+    network_mode: host
+    env_file: .env
+    environment:
+      HTTP_TIMEOUT: 5
+      CHECK_FREQUENCY: 30
+      EMAIL_ENABLED: 1
+
+# Dev Environment
+  # schoolbox-external-db-circuit-breaker:
+  #   build: .
+  #   container_name: schoolbox-external-db-circuit-breaker
+  #   command: python -u ./app.py
+    # volumes:
+    #   - ./app:/app
+    # env_file: .env
+    # environment:
+    #   HTTP_TIMEOUT: 1
+    #   CHECK_FREQUENCY: 5
+    #   EMAIL_ENABLED: 0
+  #   depends_on:
+  #     - mysql
+  
+  # mysql:
+  #   build: ./mysql/
+  #   container_name: mysql
+  #   environment:
+  #     MYSQL_DATABASE: 'db'
+  #     MYSQL_USER: 'user'
+  #     MYSQL_PASSWORD: 'password'
+  #     MYSQL_ROOT_PASSWORD: 'secret'
+  #   ports:
+  #     - '3306:3306'
+
+
