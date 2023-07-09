@@ -2,7 +2,7 @@
 Check HTTP response time of Schoolbox and disable External DB connection after a specified threshold
 
 Environment variables to be configured:
-```
+```shell
 # How long to wait for a HTTP response before it disables the External DB
 HTTP_TIMEOUT: 5
 # How often it checks
