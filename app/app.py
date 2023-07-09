@@ -72,7 +72,9 @@ while True:
             if(int(os.getenv("EMAIL_ENABLED"))):
                 # Send email notification regarding CRITICAL event
                 subject = os.getenv("APP_HOST") + "- CRITICAL External DB has been disabled"
-                body = "The schoolbox-external-db-circuit-breaker app has disabled the External DB (Edumate).\n You will need to manually enable it again after investigating Edumate performance"
+                body = f"""The schoolbox-external-db-circuit-breaker app has disabled the External DB (Edumate).\n
+You will need to manually enable it again after investigating Edumate performance. \n
+https://{os.getenv("APP_HOST")}.{os.getenv("DOMAIN")}/adminv2/setting/External+DB"""
                 content = Content("text/plain", body)
                 mail = Mail(from_email, to_email, subject, content)
                 mail_json = mail.get()
@@ -90,6 +92,8 @@ while True:
         
     else:
         # Nothing went wrong
-        print(timestamp, "HTTP response.elapsed:", response.elapsed)
+        # Debug HTTP response times
+        if(int(os.getenv("DEBUG_ENABLED"))):
+            print(timestamp, "HTTP response.elapsed:", response.elapsed)
 
     time.sleep(check_frequency)  # Pause execution before trying again

@@ -1,16 +1,28 @@
 # schoolbox-external-db-circuit-breaker
 Check HTTP response time of Schoolbox and disable External DB connection after a specified threshold
 
-Environment variables to be configured:
+### Installation
+Create a user on the Schoolbox MySQL database with required permissions to the config table:
+```shell
+CREATE USER 'custom-user'@'localhost' IDENTIFIED BY 'password';
+GRANT SELECT, UPDATE ON schoolbox.config TO 'custom-user'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+Clone this repository and configure the following environment variables in a .env file:
 ```shell
 # How long to wait for a HTTP response before it disables the External DB
-HTTP_TIMEOUT: 5
+HTTP_TIMEOUT = '5'
 # How often it checks
-CHECK_FREQUENCY: 30
+CHECK_FREQUENCY = '30'
 # Email notifications
-EMAIL_ENABLED: 1
+EMAIL_ENABLED = '1'
+# Debug mode to show HTTP response times
+DEBUG_ENABLED = '0'
 # Server the app is running on. eg. schoolbox-prod
 APP_HOST = 'schoolbox'
+# Domain name the app is hosted on
+DOMAIN = 'domain.com.au'
 # URL to check performance of
 HTTP_URL = 'https://schoolbox.com.au/pings'
 # Schoolbox API token to authenticate to URL endpoint
@@ -24,4 +36,10 @@ MYSQL_DB = 'schoolboxDB'
 SENDGRID_API_KEY = 'apiKey'
 EMAIL_FROM = 'from@email.com'
 EMAIL_TO = 'to@email.com'
+```
+
+Build and run the container locally or use docker-compose:
+```shell
+docker-compose pull
+docker-compose up -d
 ```
