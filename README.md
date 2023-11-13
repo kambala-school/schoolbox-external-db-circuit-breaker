@@ -11,8 +11,10 @@ FLUSH PRIVILEGES;
 
 Clone this repository and configure the following environment variables in a .env file:
 ```shell
-# How long to wait for a HTTP response before it disables the External DB
+# How long to wait for a HTTP timeout in seconds
 HTTP_TIMEOUT = '5'
+# How many timeouts to occur before it disables the External DB
+MAX_TIMEOUTS = '3'
 # How often it checks
 CHECK_FREQUENCY = '30'
 # Email notifications
@@ -36,6 +38,8 @@ MYSQL_DB = 'schoolboxDB'
 SENDGRID_API_KEY = 'apiKey'
 EMAIL_FROM = 'from@email.com'
 EMAIL_TO = 'to@email.com'
+# Timezone
+TZ = 'Australia/Sydney'
 ```
 
 Build and run the container locally or use docker-compose:
