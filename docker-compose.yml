@@ -1,9 +1,9 @@
 services:
 
   schoolbox-external-db-circuit-breaker:
-    image: jimdavis66/schoolbox-external-db-circuit-breaker:latest
+    image: ghcr.io/kambala-school/schoolbox-external-db-circuit-breaker:latest
     container_name: schoolbox-external-db-circuit-breaker
-    restart: always
+    restart: unless-stopped
     network_mode: host
     env_file: .env
 
