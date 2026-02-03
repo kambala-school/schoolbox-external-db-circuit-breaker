@@ -157,8 +157,15 @@ while True:
             elif response.status_code >= 500:
                 reason = f"HTTP status code {response.status_code} (server error)"
             
-            print(timestamp, "HTTP ERROR:", reason)
-            disable_external_db(reason)
+            # Check which number attempt this is
+            if(current_attempts <= max_timeouts):
+                # Increment attempts and continue the loop
+                current_attempts = current_attempts + 1
+                print(timestamp, "HTTP ERROR:", reason, "ATTEMPT NUMBER", current_attempts)
+            else:
+                # Circuit breaker
+                print(timestamp, "CIRCUIT BREAKER - HTTP ERROR:", reason)
+                disable_external_db(reason)
         else:
             # Nothing went wrong, reset attempts
             current_attempts = 1
